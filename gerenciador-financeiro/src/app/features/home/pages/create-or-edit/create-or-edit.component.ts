@@ -12,6 +12,7 @@ import { Transaction, TransactionPayload } from '../../../../shared/transaction/
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeedbackService } from '../../../../shared/feedback/services/feedback.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-create',
@@ -70,20 +71,22 @@ export class CreateOrEditComponent implements OnInit{
       value: this.form().value.value as number,
     }
 
+    this.createOrEdit(payload).subscribe({
+      next: () => this._router.navigate(['/'])
+    });
+  }
+
+  createOrEdit(payload: TransactionPayload) {
     if(this.isEdit()) {
-      this._transactionsService.put(this.transaction()!.id ,payload).subscribe({
-      next:() => {
-        this._feedbackService.success('Transação editada com sucesso');
-        this._router.navigate(['/']);
-      }
-      });
+      return this._transactionsService.put(this.transaction()!.id ,payload)
+      .pipe(
+        tap(() =>  this._feedbackService.success('Transação editada com sucesso'))
+      );
     } else {
-      this._transactionsService.post(payload).subscribe({
-      next:() => {
-          this._feedbackService.success('Transação criada com sucesso');
-          this._router.navigate(['/']);
-        }
-      });
+      return this._transactionsService.post(payload)
+      .pipe(
+        tap(() => this._feedbackService.success('Transação criada com sucesso'))
+      );
     }
   }
 }
