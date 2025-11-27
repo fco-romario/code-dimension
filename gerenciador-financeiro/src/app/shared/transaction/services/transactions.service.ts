@@ -12,9 +12,20 @@ export class TransactionsService {
       return this._http.get<Transaction[]>('http://localhost:3000/transactions');
   }
 
+  public getById(id: string) {
+      return this._http.get<Transaction>(`http://localhost:3000/transactions/${id}`);
+  }
+
   post(payload: TransactionPayload) {
-    return this._http.post<any>(
+    return this._http.post<TransactionPayload>(
       'http://localhost:3000/transactions',
+      payload
+    );
+  }
+
+  put(id: number, payload: TransactionPayload) {
+    return this._http.put<TransactionPayload>(
+      `http://localhost:3000/transactions/${id}`,
       payload
     );
   }

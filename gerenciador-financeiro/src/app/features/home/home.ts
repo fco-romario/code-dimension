@@ -4,7 +4,7 @@ import { TransactionItem } from './components/transaction-item/transaction-item'
 import { Transaction } from '../../shared/transaction/interfaces/transaction';
 import { NoTransaction } from './components/no-transaction/no-transaction';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TransactionsService } from '../../shared/transaction/services/transactions.service';
 
 @Component({
@@ -21,11 +21,16 @@ import { TransactionsService } from '../../shared/transaction/services/transacti
 })
 export class Home implements OnInit {
   private _transactionsService = inject(TransactionsService);
+  private _router = inject(Router);
 
   transactions = signal<Transaction[]>([]);
 
   ngOnInit(): void {
    this.getAllTransactions();
+  }
+
+  edit(transaction: Transaction) {
+    this._router.navigate(['/edit', transaction.id]);
   }
 
   private getAllTransactions() {
