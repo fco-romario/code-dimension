@@ -13,4 +13,10 @@ export class FeedbackService {
       panelClass: 'snak-bar-success-feedback',
     });
   }
+  
+  error(message: string): void {
+    this._snackBar.open(message, 'Ok', {
+      panelClass: 'snak-bar-error-feedback',
+    });
+  }
 }

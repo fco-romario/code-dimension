@@ -4,9 +4,17 @@
 :root {
   .snak-bar-success-feedback {
     @include mat.snack-bar-overrides((
-      supporting-text-color: var(--mat-sys-on-surface),
-      button-color: var(--mat-sys-on-surface),
+      supporting-text-color: var(--mat-sys-inverse-on-surface),
+      button-color: var(--mat-sys-inverse-on-surface),
       container-color: var(--custom-color-success),
+    ));
+  }
+
+  .snak-bar-error-feedback {
+    @include mat.snack-bar-overrides((
+      supporting-text-color: var(--mat-sys-inverse-on-surface),
+      button-color: var(--mat-sys-inverse-on-surface),
+      container-color: var(--mat-sys-on-error-container),
     ));
   }
 }
