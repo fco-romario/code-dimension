@@ -72,7 +72,8 @@ export class CreateOrEditComponent implements OnInit{
     }
 
     this.createOrEdit(payload).subscribe({
-      next: () => this._router.navigate(['/'])
+      next: () => this._router.navigate(['/']),
+      error: () => this._feedbackService.error('Erro ao remover transação!')
     });
   }
 
