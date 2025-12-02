@@ -8,6 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TransactionsService } from '../../shared/transaction/services/transactions.service';
 import { FeedbackService } from '../../shared/feedback/services/feedback.service';
 import { ConfirmationDialogService } from '../../shared/dialog/confirmation/services/confirmation-dialog.service';
+import { TransactionsContainerComponent } from './components/transactions-container/transactions-container.component';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ import { ConfirmationDialogService } from '../../shared/dialog/confirmation/serv
     NoTransaction,
     MatButtonModule,
     RouterLink,
+    TransactionsContainerComponent
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
