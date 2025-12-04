@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ConfirmationDialogService } from '../../../../shared/dialog/confirmation/services/confirmation-dialog.service';
 import { FeedbackService } from '../../../../shared/feedback/services/feedback.service';
@@ -29,11 +29,11 @@ export class ListComponent implements OnInit{
   private _feedbackService = inject(FeedbackService);
   private _confirmationDialogService = inject(ConfirmationDialogService);
 
-  transactions = signal<Transaction[]>([]);
+  transactions = input.required<Transaction[]>();
 
-  ngOnInit(): void {
-   this.getAllTransactions();
-  }
+  items = linkedSignal(() => this.transactions());
+
+  ngOnInit(): void { }
 
   edit(transaction: Transaction) {
     this._router.navigate(['/edit', transaction.id]);
@@ -63,18 +63,7 @@ export class ListComponent implements OnInit{
   private removeTransactionFromArray(transaction: Transaction) {
     // const transactionsFiltered = this.transactions().filter(item => item.id !== transaction.id);
     // this.transactions.set(transactionsFiltered);
-    this.transactions.update(transactions => transactions.filter(item => item.id !== transaction.id));
-  }
-
-  private getAllTransactions() {
-    this._transactionsService.getAll().subscribe({
-      next: (transactions) => {
-        this.transactions.set(transactions);
-      },
-      error: () => {
-        this._feedbackService.error('Erro ao remover transação!');
-      }
-    });
+    this.items.update(transactions => transactions.filter(item => item.id !== transaction.id));
   }
 }
 
