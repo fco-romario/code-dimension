@@ -5,10 +5,10 @@ import { NoTransaction } from './pages/list/components/no-transaction/no-transac
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { TransactionsContainerComponent } from './pages/list/components/transactions-container/transactions-container.component';
-import { ConfirmationDialogService } from '../../shared/dialog/confirmation/services/confirmation-dialog.service';
-import { FeedbackService } from '../../shared/feedback/services/feedback.service';
-import { Transaction } from '../../shared/transaction/interfaces/transaction';
-import { TransactionsService } from '../../shared/transaction/services/transactions.service';
+import { ConfirmationDialogService } from '@shared/dialog/confirmation/services/confirmation-dialog.service';
+import { FeedbackService } from '@shared/feedback/services/feedback.service';
+import { Transaction } from '@shared/transaction/interfaces/transaction';
+import { TransactionsService } from '@shared/transaction/services/transactions.service';
 
 @Component({
   selector: 'app-home',
