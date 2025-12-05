@@ -9,28 +9,28 @@ export class TransactionsService {
   private _http = inject(HttpClient);
   
   public getAll() {
-      return this._http.get<Transaction[]>('http://localhost:3000/transactions');
+      return this._http.get<Transaction[]>('/api/transactions');
   }
 
   public getById(id: string) {
-      return this._http.get<Transaction>(`http://localhost:3000/transactions/${id}`);
+      return this._http.get<Transaction>(`/api/transactions/${id}`);
   }
 
   post(payload: TransactionPayload) {
     return this._http.post<TransactionPayload>(
-      'http://localhost:3000/transactions',
+      '/api/transactions',
       payload
     );
   }
 
   put(id: number, payload: TransactionPayload) {
     return this._http.put<TransactionPayload>(
-      `http://localhost:3000/transactions/${id}`,
+      `/api/transactions/${id}`,
       payload
     );
   }
 
   delete(id: number) {
-    return this._http.delete(`http://localhost:3000/transactions/${id}`);
+    return this._http.delete(`/api/transactions/${id}`);
   }
 }
