@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../../services/auth.service';
+import { AuthTokenResponse } from '../../interfaces/auth-token-response';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserCredentials } from '../../interfaces/user-credentials';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +16,34 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class LoginComponent {
 
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
+
   form = new FormGroup({
       user: new FormControl('', {validators: [Validators.required]}),
       password: new FormControl('', {validators: [Validators.required]}),
   });
   
   submit() {
-    throw new Error('Method not implemented.');
+    if(this.form.invalid) return;
+
+    const payload: UserCredentials = {
+      user: this.form.value.user as string,
+      password: this.form.value.password as string
+    }
+    
+    this._authService.login(payload)
+      .subscribe({
+        next: (response: AuthTokenResponse) => {
+          this._router.navigate(['/']);
+        },
+        error: (error: HttpErrorResponse) => {
+          if(error.status === 401) {
+            this.form.setErrors({
+              wrongCredentials: true
+            })
+          }
+        }
+      });
   }
 }
