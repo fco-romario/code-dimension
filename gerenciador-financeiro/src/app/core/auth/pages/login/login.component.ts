@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserCredentials } from '../../interfaces/user-credentials';
 import { AuthTokenStorageService } from '../../services/auth-token-storage.service';
+import { LoggedInUserService } from '../../stores/logged-in-user.service';
+import { pipe, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,7 @@ export class LoginComponent {
   private _authService = inject(AuthService);
   private _router = inject(Router);
   private _authTokenStorageService = inject(AuthTokenStorageService);
+  private _loggedInUserService = inject(LoggedInUserService);
 
   form = new FormGroup({
       user: new FormControl('', {validators: [Validators.required]}),
@@ -34,15 +37,16 @@ export class LoginComponent {
       password: this.form.value.password as string
     }
     
-    this._authService.login(payload)
+    this._authService
+      .login(payload)
+      .pipe(
+        tap((response) => this._authTokenStorageService.set(response.token)),
+        switchMap((response) => this._authService.getCurrentUser(response.token)),
+        tap((user) => this._loggedInUserService.setUser(user)),
+      )
       .subscribe({
-        next: (response: AuthTokenResponse) => {
-          this._authTokenStorageService.set(response.token);
-          this._authService.getCurrentUser(response.token).subscribe(() => {
-            this._router.navigate(['/']);
-          });
-
-        },
+        next: () =>  this._router.navigate(['/']),
+        
         error: (error: HttpErrorResponse) => {
           if(error.status === 401) {
             this.form.setErrors({
