@@ -1,11 +1,11 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, RedirectCommand, Router } from '@angular/router';
-import { LoggedInUserService } from '../stores/logged-in-user.service';
+import { LoggedInUserStoreService } from '../stores/logged-in-user-store.service';
 
 export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
-  const _loggedInUserService = inject(LoggedInUserService);
+  const _loggedInUserStoreService = inject(LoggedInUserStoreService);
   
-  if(_loggedInUserService.isLoggedIn()) {
+  if(_loggedInUserStoreService.isLoggedIn()) {
     return true;
   }
 

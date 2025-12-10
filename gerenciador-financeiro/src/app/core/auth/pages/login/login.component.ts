@@ -8,8 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserCredentials } from '../../interfaces/user-credentials';
 import { AuthTokenStorageService } from '../../services/auth-token-storage.service';
-import { LoggedInUserService } from '../../stores/logged-in-user.service';
 import { pipe, switchMap, tap } from 'rxjs';
+import { LoggedInUserStoreService } from '../../stores/logged-in-user-store.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ export class LoginComponent {
   private _authService = inject(AuthService);
   private _router = inject(Router);
   private _authTokenStorageService = inject(AuthTokenStorageService);
-  private _loggedInUserService = inject(LoggedInUserService);
+  private _loggedInUserStoreService = inject(LoggedInUserStoreService);
 
   form = new FormGroup({
       user: new FormControl('', {validators: [Validators.required]}),
@@ -42,7 +42,7 @@ export class LoginComponent {
       .pipe(
         tap((response) => this._authTokenStorageService.set(response.token)),
         switchMap((response) => this._authService.getCurrentUser(response.token)),
-        tap((user) => this._loggedInUserService.setUser(user)),
+        tap((user) => this._loggedInUserStoreService.setUser(user)),
       )
       .subscribe({
         next: () =>  this._router.navigate(['/']),
