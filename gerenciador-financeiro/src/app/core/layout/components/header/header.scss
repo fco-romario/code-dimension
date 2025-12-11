@@ -1,0 +1,19 @@
+@use 'variables' as vars;
+
+.toolbar {
+    display: flex;
+    justify-content: center;
+
+    .toolbar-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        width: 100%; 
+        max-width: vars.$content-width;
+    }
+
+    .button-logout {
+        margin-left: auto;
+    }
+}
