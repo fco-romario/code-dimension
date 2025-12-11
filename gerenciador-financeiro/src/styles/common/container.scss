@@ -1,3 +1,5 @@
+@use '../variables' as vars;
+
 .container {
     display: flex;
     justify-content: center;
@@ -7,6 +9,6 @@
     
     .container-content {
         width: 100%;
-        max-width: 750px;
+        max-width: vars.$content-width;
     }
 }
