@@ -3,6 +3,7 @@ import { tap, switchMap, of } from "rxjs";
 import { AuthService } from "../services/auth.service";
 import { AuthTokenStorageService } from "../services/auth-token-storage.service";
 import { LoggedInUserStoreService } from "../stores/logged-in-user-store.service";
+import { LoginFacadeService } from "../facades/login-facade.service";
 
 export function provideLoggedInUser() {
     return provideAppInitializer(() => {
@@ -10,15 +11,11 @@ export function provideLoggedInUser() {
         
         if(!_authTokenStorageService.has()) return of();
         
-        const _authService = inject(AuthService);
-        const _loggedInUserService = inject(LoggedInUserStoreService);
-
+        // const _authService = inject(AuthService);
+        // const _loggedInUserService = inject(LoggedInUserStoreService);
+        const _loginFacadeService = inject(LoginFacadeService);
         const token = _authTokenStorageService.get() as string;
 
-        return _authService.refreshToken(token).pipe(
-            tap((response) => _authTokenStorageService.set(response.token)),
-            switchMap((response) => _authService.getCurrentUser(response.token)),
-            tap((user) => _loggedInUserService.setUser(user)),
-        );
+        return _loginFacadeService.refreshToken(token);
     })
 }

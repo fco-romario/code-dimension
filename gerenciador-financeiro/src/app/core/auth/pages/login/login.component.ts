@@ -10,6 +10,7 @@ import { UserCredentials } from '../../interfaces/user-credentials';
 import { AuthTokenStorageService } from '../../services/auth-token-storage.service';
 import { pipe, switchMap, tap } from 'rxjs';
 import { LoggedInUserStoreService } from '../../stores/logged-in-user-store.service';
+import { LoginFacadeService } from '../../facades/login-facade.service';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +20,11 @@ import { LoggedInUserStoreService } from '../../stores/logged-in-user-store.serv
 })
 export class LoginComponent {
 
-  private _authService = inject(AuthService);
+  // private _authService = inject(AuthService);
   private _router = inject(Router);
-  private _authTokenStorageService = inject(AuthTokenStorageService);
-  private _loggedInUserStoreService = inject(LoggedInUserStoreService);
+  // private _authTokenStorageService = inject(AuthTokenStorageService);
+  // private _loggedInUserStoreService = inject(LoggedInUserStoreService);
+  private _loginFacadeService = inject(LoginFacadeService);
 
   form = new FormGroup({
       user: new FormControl('', {validators: [Validators.required]}),
@@ -37,16 +39,9 @@ export class LoginComponent {
       password: this.form.value.password as string
     }
     
-    this._authService
-      .login(payload)
-      .pipe(
-        tap((response) => this._authTokenStorageService.set(response.token)),
-        switchMap((response) => this._authService.getCurrentUser(response.token)),
-        tap((user) => this._loggedInUserStoreService.setUser(user)),
-      )
+    this._loginFacadeService.login(payload)
       .subscribe({
         next: () =>  this._router.navigate(['/']),
-        
         error: (error: HttpErrorResponse) => {
           if(error.status === 401) {
             this.form.setErrors({
