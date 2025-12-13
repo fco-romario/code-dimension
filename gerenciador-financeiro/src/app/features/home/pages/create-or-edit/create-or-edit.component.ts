@@ -13,6 +13,7 @@ import { FeedbackService } from '@shared/feedback/services/feedback.service';
 import { tap } from 'rxjs';
 import { FullWidthDirective } from '@shared/material/form-field/directives/full-width.directive';
 import { MarginBottomDirective } from '@shared/material/form-field/directives/margin-bottom.directive';
+import { CustomFormFieldDirective } from '@shared/material/form-field/directives/custom-form-field.directive';
 
 @Component({
   selector: 'app-create',
@@ -23,8 +24,9 @@ import { MarginBottomDirective } from '@shared/material/form-field/directives/ma
     MatButtonModule,
     MatButtonToggleModule,
     NgxMaskDirective,
-    FullWidthDirective,
-    MarginBottomDirective
+    // FullWidthDirective,
+    // MarginBottomDirective
+    CustomFormFieldDirective
   ],
   templateUrl: './create-or-edit.component.html',
   styleUrl: './create-or-edit.component.scss',
