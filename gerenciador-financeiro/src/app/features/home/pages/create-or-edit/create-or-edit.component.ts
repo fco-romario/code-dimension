@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { FeedbackService } from '@shared/feedback/services/feedback.service';
 import { tap } from 'rxjs';
 import { FullWidthDirective } from '@shared/material/form-field/directives/full-width.directive';
+import { MarginBottomDirective } from '@shared/material/form-field/directives/margin-bottom.directive';
 
 @Component({
   selector: 'app-create',
@@ -22,7 +23,8 @@ import { FullWidthDirective } from '@shared/material/form-field/directives/full-
     MatButtonModule,
     MatButtonToggleModule,
     NgxMaskDirective,
-    FullWidthDirective
+    FullWidthDirective,
+    MarginBottomDirective
   ],
   templateUrl: './create-or-edit.component.html',
   styleUrl: './create-or-edit.component.scss',
