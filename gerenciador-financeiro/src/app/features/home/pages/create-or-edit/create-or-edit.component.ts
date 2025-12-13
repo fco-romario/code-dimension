@@ -11,6 +11,7 @@ import { Transaction, TransactionPayload } from '@shared/transaction/interfaces/
 import { Router } from '@angular/router';
 import { FeedbackService } from '@shared/feedback/services/feedback.service';
 import { tap } from 'rxjs';
+import { FullWidthDirective } from '@shared/material/form-field/directives/full-width.directive';
 
 @Component({
   selector: 'app-create',
@@ -21,6 +22,7 @@ import { tap } from 'rxjs';
     MatButtonModule,
     MatButtonToggleModule,
     NgxMaskDirective,
+    FullWidthDirective
   ],
   templateUrl: './create-or-edit.component.html',
   styleUrl: './create-or-edit.component.scss',
