@@ -1,6 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { Transaction } from '@shared/transaction/interfaces/transaction';
 import { TransactionType } from '@shared/transaction/enums/transaction-type';
+import { CurrencyPipe } from '@angular/common';
 
 const CssClasses = {
   [TransactionType.INCOME]: 'income',
@@ -8,7 +9,7 @@ const CssClasses = {
 }
 @Component({
   selector: 'app-transaction-value',
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './transaction-value.html',
   styleUrl: './transaction-value.scss',
   host: {
