@@ -1,5 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { HumanizeCurrencyPipe } from './pipes/humanize-currency-pipe';
 
 type CardType = 'income' | 'outcome' | 'balance';
 type ValueCssClass = 'income' | 'outcome' | 'zero';
@@ -15,7 +16,7 @@ type ValueCssClass = 'income' | 'outcome' | 'zero';
 
 @Component({
   selector: 'app-balance-card',
-  imports: [MatCardModule],
+  imports: [MatCardModule, HumanizeCurrencyPipe],
   templateUrl: './balance-card.html',
   styleUrl: './balance-card.scss',
 })
