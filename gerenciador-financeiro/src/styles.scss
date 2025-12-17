@@ -11,6 +11,7 @@
 @use 'styles/overrides/button.scss';
 @use 'styles/custom_colors';
 @use 'styles/common/container';
+@use 'styles/overrides/header.scss';
 
 html {
   @include mat.theme((
