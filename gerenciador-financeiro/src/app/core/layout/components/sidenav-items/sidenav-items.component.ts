@@ -3,16 +3,15 @@ import { MatListModule } from '@angular/material/list';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { LogoutFacadeService } from '../../../auth/facades/logout-facade.service';
 import { LoggedInUserStoreService } from '../../../auth/stores/logged-in-user-store.service';
+import { LogoutDirective } from './directives/logout.directive';
 
 @Component({
   selector: 'app-sidenav-items',
-  imports: [MatListModule, RouterLink, RouterLinkActive],
+  imports: [MatListModule, RouterLink, RouterLinkActive, LogoutDirective],
   templateUrl: './sidenav-items.component.html',
   styleUrl: './sidenav-items.component.scss',
 })
 export class SidenavItemsComponent {
-  private _logoutFacadeService = inject(LogoutFacadeService);
-  private _router = inject(Router);
   private _loggedInUserStoreService = inject(LoggedInUserStoreService);
   
   isLoggedIn =  computed(() => this._loggedInUserStoreService.isLoggedIn());
@@ -24,10 +23,5 @@ export class SidenavItemsComponent {
     },
   ]);
 
-  logout() {
-    this._logoutFacadeService.logout()
-      .subscribe({
-        next: () => this._router.navigate(['./auth/login']),
-      })
-  }
+
 }
