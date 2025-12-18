@@ -2,7 +2,7 @@
 
 .toolbar {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
 
     .toolbar-content {
         display: flex;
@@ -10,10 +10,10 @@
         align-items: center;
         
         width: 100%; 
-        max-width: vars.$content-width;
+        // max-width: vars.$content-width;
     }
 
-    .button-logout {
-        margin-left: auto;
+    .menu-icon {
+        color: var(--mat-sys-on-primary);
     }
 }
