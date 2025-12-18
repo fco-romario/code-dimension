@@ -3,11 +3,11 @@
 .container {
     display: flex;
     justify-content: center;
+    max-height: calc(100vh - var(--mat-toolbar-standard-height));
 
-    padding-top: 24px;
-    
     .container-content {
         width: 100%;
         max-width: vars.$content-width;
+        padding-top: 24px;
     }
 }
