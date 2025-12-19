@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NoTransaction } from './components/no-transaction/no-transaction';
 import { TransactionItem } from './components/transaction-item/transaction-item';
 import { TransactionsContainerComponent } from './components/transactions-container/transactions-container.component';
+import { SearchComponent } from "./components/search/search.component";
 
 @Component({
   selector: 'app-list',
@@ -16,8 +17,9 @@ import { TransactionsContainerComponent } from './components/transactions-contai
     NoTransaction,
     MatButtonModule,
     RouterLink,
-    TransactionsContainerComponent
-  ],
+    TransactionsContainerComponent,
+    SearchComponent
+],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
