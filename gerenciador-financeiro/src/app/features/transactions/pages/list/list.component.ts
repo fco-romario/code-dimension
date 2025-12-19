@@ -34,6 +34,8 @@ export class ListComponent implements OnInit{
 
   items = linkedSignal(() => this.transactions());
 
+  searchText = signal('');
+
   ngOnInit(): void { }
 
   edit(transaction: Transaction) {
