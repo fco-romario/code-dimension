@@ -1,4 +1,4 @@
-import { Component, inject, input, linkedSignal, OnInit, resource, Signal, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, OnInit, resource, Signal, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ConfirmationDialogService } from '@shared/dialog/confirmation/services/confirmation-dialog.service';
 import { FeedbackService } from '@shared/feedback/services/feedback.service';
@@ -12,6 +12,7 @@ import { SearchComponent } from "./components/search/search.component";
 import { debounceTime, firstValueFrom } from 'rxjs';
 import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { HttpParams, httpResource, HttpResourceRequest } from '@angular/common/http';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 function typeDelay(signal: Signal<string>) {
   const observable = toObservable(signal).pipe(debounceTime(500));
@@ -26,7 +27,8 @@ function typeDelay(signal: Signal<string>) {
     MatButtonModule,
     RouterLink,
     TransactionsContainerComponent,
-    SearchComponent
+    SearchComponent,
+    MatProgressBarModule
 ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
@@ -38,7 +40,7 @@ export class ListComponent implements OnInit{
   private _confirmationDialogService = inject(ConfirmationDialogService);
   private _activatedRoute = inject(ActivatedRoute);
 
-  transactions = input.required<Transaction[]>();
+  // transactions = input.required<Transaction[]>();
 
   // items = linkedSignal(() => this.transactions());
 
@@ -54,7 +56,10 @@ export class ListComponent implements OnInit{
   //   defaultValue: []
   // });
 
-  resourceRef = this._transactionsService.getAllWithHttpResource(typeDelay(this.searchText));
+  private resourceRef = this._transactionsService.getAllWithHttpResource(typeDelay(this.searchText));
+
+  isLoading = computed(() => this.resourceRef.isLoading());
+  transactions = computed(() => this.resourceRef.value());
 
   ngOnInit(): void { }
 

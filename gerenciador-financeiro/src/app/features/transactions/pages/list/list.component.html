@@ -3,7 +3,10 @@
     <a class="add-transaction" matButton="filled" routerLink="create/new">Criar transaction</a>
 </div>
 
-<app-transactions-container class="transactions" [transactions]="resourceRef.value()">
+@if(isLoading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+} @else {
+    <app-transactions-container class="transactions" [transactions]="transactions()">
     <ng-template #itemTemplate let-item="item">
         <app-transaction-item 
             class="transaction" 
@@ -16,5 +19,5 @@
     <ng-template #noItemsTemplate>
         <app-no-transaction/>
     </ng-template>
-    <app-no-transaction/>
-</app-transactions-container>
+    </app-transactions-container>
+}
