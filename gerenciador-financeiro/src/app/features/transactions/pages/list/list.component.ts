@@ -1,4 +1,4 @@
-import { Component, inject, input, linkedSignal, OnInit, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, OnInit, resource, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ConfirmationDialogService } from '@shared/dialog/confirmation/services/confirmation-dialog.service';
 import { FeedbackService } from '@shared/feedback/services/feedback.service';
@@ -9,6 +9,7 @@ import { NoTransaction } from './components/no-transaction/no-transaction';
 import { TransactionItem } from './components/transaction-item/transaction-item';
 import { TransactionsContainerComponent } from './components/transactions-container/transactions-container.component';
 import { SearchComponent } from "./components/search/search.component";
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -32,9 +33,19 @@ export class ListComponent implements OnInit{
 
   transactions = input.required<Transaction[]>();
 
-  items = linkedSignal(() => this.transactions());
+  // items = linkedSignal(() => this.transactions());
 
   searchText = signal('');
+
+  resourceRef  = resource({
+    params: () => {
+      return { searchText: this.searchText()}
+    },
+    loader: ({ params: { searchText }}) => {
+      return  firstValueFrom(this._transactionsService.getAll(searchText));
+    },
+    defaultValue: []
+  });
 
   ngOnInit(): void { }
 
@@ -66,7 +77,7 @@ export class ListComponent implements OnInit{
   private removeTransactionFromArray(transaction: Transaction) {
     // const transactionsFiltered = this.transactions().filter(item => item.id !== transaction.id);
     // this.transactions.set(transactionsFiltered);
-    this.items.update(transactions => transactions.filter(item => item.id !== transaction.id));
+    this.resourceRef.update(transactions => transactions.filter(item => item.id !== transaction.id));
   }
 }
 

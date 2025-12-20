@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Transaction, TransactionPayload } from '../interfaces/transaction';
 
@@ -8,8 +8,14 @@ import { Transaction, TransactionPayload } from '../interfaces/transaction';
 export class TransactionsService {
   private _http = inject(HttpClient);
   
-  public getAll() {
-      return this._http.get<Transaction[]>('/api/transactions');
+  public getAll(searchText?: string) {
+    let httpParams = new HttpParams();
+
+    if (searchText) {
+      httpParams = httpParams.append('q', searchText);
+    }
+
+    return this._http.get<Transaction[]>('/api/transactions', { params: httpParams });
   }
 
   public getById(id: string) {
