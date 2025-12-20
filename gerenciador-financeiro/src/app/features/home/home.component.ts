@@ -1,13 +1,17 @@
-import { Component, input, linkedSignal, OnInit } from '@angular/core';
+import { Component, computed, input, linkedSignal, OnInit, signal } from '@angular/core';
 import { Transaction } from '@shared/transaction/interfaces/transaction';
 import { MatButtonModule } from '@angular/material/button';
 import { Balance } from './components/balance/balance';
+import { PieChartComponent } from './components/charts/pie/pie-chart.component';
+import { PieChartConfig } from './components/charts/pie/pie-chart-config.interface';
+import { TransactionType } from '@shared/transaction/enums/transaction-type';
 
 @Component({
   selector: 'app-home',
   imports: [
     Balance,
     MatButtonModule,
+    PieChartComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -16,7 +20,26 @@ export class HomeComponent {
 
   transactions = input.required<Transaction[]>();
 
+  totalIncomes = computed(() => {
+      return this.transactions()
+        .filter(item => item.type === TransactionType.INCOME)
+        .reduce((total, item) => total + item.value, 0);
+    })
+  
+    totalOutcomes = computed(() => {
+      return this.transactions()
+        .filter(item => item.type === TransactionType.OUTCOME)
+        .reduce((total, item) => total + item.value, 0);
+    })
+
   // items = linkedSignal(() => this.transactions());
+  chartConfig = computed<PieChartConfig>(() => {
+    return {
+      labels: ['Ganhos', 'Gastos'],
+      dataLabel: 'valor total',
+      data: [this.totalIncomes(), this.totalOutcomes()]
+    }
+  });
 
 }
 
