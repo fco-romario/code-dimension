@@ -49,21 +49,7 @@ export class ListComponent implements OnInit{
   //   defaultValue: []
   // });
 
-  resourceRef = httpResource<Transaction[]>(() => {
-    let httpParams = new HttpParams();
-
-    if (this.searchText()) {
-      httpParams = httpParams.append('q', this.searchText());
-    }
-
-    return {
-      url: '/api/transactions',
-      params: httpParams,
-      
-    } as HttpResourceRequest
-  }, {
-    defaultValue: [],
-  });
+  resourceRef = this._transactionsService.getAllWithHttpResource(this.searchText);
 
   ngOnInit(): void { }
 
