@@ -11,6 +11,7 @@ import { TransactionsContainerComponent } from './components/transactions-contai
 import { SearchComponent } from "./components/search/search.component";
 import { firstValueFrom } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { HttpParams, httpResource, HttpResourceRequest } from '@angular/common/http';
 
 @Component({
   selector: 'app-list',
@@ -38,14 +39,30 @@ export class ListComponent implements OnInit{
 
   searchText = signal('');
 
-  resourceRef  = rxResource({
-    params: () => {
-      return { searchText: this.searchText()}
-    },
-    stream: ({ params: { searchText }}) => {
-      return  this._transactionsService.getAll(searchText);
-    },
-    defaultValue: []
+  // resourceRef  = rxResource({
+  //   params: () => {
+  //     return { searchText: this.searchText()}
+  //   },
+  //   stream: ({ params: { searchText }}) => {
+  //     return  this._transactionsService.getAll(searchText);
+  //   },
+  //   defaultValue: []
+  // });
+
+  resourceRef = httpResource<Transaction[]>(() => {
+    let httpParams = new HttpParams();
+
+    if (this.searchText()) {
+      httpParams = httpParams.append('q', this.searchText());
+    }
+
+    return {
+      url: '/api/transactions',
+      params: httpParams,
+      
+    } as HttpResourceRequest
+  }, {
+    defaultValue: [],
   });
 
   ngOnInit(): void { }
