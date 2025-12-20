@@ -10,6 +10,7 @@ import { TransactionItem } from './components/transaction-item/transaction-item'
 import { TransactionsContainerComponent } from './components/transactions-container/transactions-container.component';
 import { SearchComponent } from "./components/search/search.component";
 import { firstValueFrom } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-list',
@@ -37,12 +38,12 @@ export class ListComponent implements OnInit{
 
   searchText = signal('');
 
-  resourceRef  = resource({
+  resourceRef  = rxResource({
     params: () => {
       return { searchText: this.searchText()}
     },
-    loader: ({ params: { searchText }}) => {
-      return  firstValueFrom(this._transactionsService.getAll(searchText));
+    stream: ({ params: { searchText }}) => {
+      return  this._transactionsService.getAll(searchText);
     },
     defaultValue: []
   });
