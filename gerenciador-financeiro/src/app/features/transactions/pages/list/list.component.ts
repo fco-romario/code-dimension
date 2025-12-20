@@ -1,4 +1,4 @@
-import { Component, inject, input, linkedSignal, OnInit, resource, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, OnInit, resource, Signal, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ConfirmationDialogService } from '@shared/dialog/confirmation/services/confirmation-dialog.service';
 import { FeedbackService } from '@shared/feedback/services/feedback.service';
@@ -9,9 +9,14 @@ import { NoTransaction } from './components/no-transaction/no-transaction';
 import { TransactionItem } from './components/transaction-item/transaction-item';
 import { TransactionsContainerComponent } from './components/transactions-container/transactions-container.component';
 import { SearchComponent } from "./components/search/search.component";
-import { firstValueFrom } from 'rxjs';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { debounceTime, firstValueFrom } from 'rxjs';
+import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { HttpParams, httpResource, HttpResourceRequest } from '@angular/common/http';
+
+function typeDelay(signal: Signal<string>) {
+  const observable = toObservable(signal).pipe(debounceTime(500));
+  return toSignal(observable, { initialValue: ''})
+} // signal => obvervable => add delay 1s => observable => signal
 
 @Component({
   selector: 'app-list',
@@ -49,7 +54,7 @@ export class ListComponent implements OnInit{
   //   defaultValue: []
   // });
 
-  resourceRef = this._transactionsService.getAllWithHttpResource(this.searchText);
+  resourceRef = this._transactionsService.getAllWithHttpResource(typeDelay(this.searchText));
 
   ngOnInit(): void { }
 
