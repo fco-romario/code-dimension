@@ -2,6 +2,8 @@
 
 @defer(on interaction) {
     <app-pie-chart [config]="chartConfig()"></app-pie-chart>
+} @loading(minimum 2s) {
+    <p>Carregando  conteúdo</p>
 } @placeholder(minimum 1s) {
     <div>
         <button>Clique aqui</button>
