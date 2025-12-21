@@ -1,2 +1,9 @@
 <app-balance [transactions]="transactions()"></app-balance>
-<app-pie-chart [config]="chartConfig()"></app-pie-chart>
+
+@defer(on interaction) {
+    <app-pie-chart [config]="chartConfig()"></app-pie-chart>
+} @placeholder(minimum 1s) {
+    <div>
+        <button>Clique aqui</button>
+    </div>
+}
