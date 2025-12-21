@@ -1,11 +1,14 @@
 <app-balance [transactions]="transactions()"></app-balance>
 
-@defer(on interaction) {
+@defer(on interaction(btn)) {
     <app-pie-chart [config]="chartConfig()"></app-pie-chart>
 } @loading(minimum 2s) {
     <p>Carregando  conteúdo</p>
 } @placeholder(minimum 1s) {
     <div>
-        <button>Clique aqui</button>
+        <button>Clique inválido</button>
+    </div>
+    <div>
+        <button #btn>Clique aqui</button>
     </div>
 }
