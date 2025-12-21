@@ -20,6 +20,8 @@ import { sumTransactions } from '@shared/transaction/functions/sum-transactions'
 export class HomeComponent {
 
   transactions = input.required<Transaction[]>();
+  
+  canLoadComponent = signal(false);
 
   totalIncomes = computed(() => {
       return sumTransactions(this.transactions(), TransactionType.INCOME);
