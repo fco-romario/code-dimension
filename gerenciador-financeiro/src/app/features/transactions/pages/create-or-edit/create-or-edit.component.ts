@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -30,6 +30,7 @@ import { CustomFormFieldDirective } from '@shared/material/form-field/directives
   ],
   templateUrl: './create-or-edit.component.html',
   styleUrl: './create-or-edit.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateOrEditComponent implements OnInit{
   // private _activatedRoute = inject(ActivatedRoute);

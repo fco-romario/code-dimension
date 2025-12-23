@@ -1,4 +1,4 @@
-import { Component, computed, input, linkedSignal, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, linkedSignal, OnInit, signal } from '@angular/core';
 import { Transaction } from '@shared/transaction/interfaces/transaction';
 import { MatButtonModule } from '@angular/material/button';
 import { Balance } from './components/balance/balance';
@@ -22,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
 

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { TransactionItem } from './pages/list/components/transaction-item/transaction-item';
 import { NoTransaction } from './pages/list/components/no-transaction/no-transaction';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +20,7 @@ import { TransactionsService } from '@shared/transaction/services/transactions.s
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Home implements OnInit {
   private _transactionsService = inject(TransactionsService);

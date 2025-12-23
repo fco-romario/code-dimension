@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, linkedSignal, OnInit, resource, Signal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, OnInit, resource, Signal, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ConfirmationDialogService } from '@shared/dialog/confirmation/services/confirmation-dialog.service';
 import { FeedbackService } from '@shared/feedback/services/feedback.service';
@@ -32,6 +32,7 @@ function typeDelay(signal: Signal<string>) {
 ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent implements OnInit{
   private _transactionsService = inject(TransactionsService);

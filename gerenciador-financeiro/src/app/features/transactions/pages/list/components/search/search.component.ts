@@ -1,4 +1,4 @@
-import { Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ɵInternalFormsSharedModule } from "@angular/forms";
@@ -8,6 +8,7 @@ import { FormsModule, ɵInternalFormsSharedModule } from "@angular/forms";
   imports: [MatFormFieldModule, MatInputModule, ɵInternalFormsSharedModule, FormsModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent {
   searchText = model.required<string>();

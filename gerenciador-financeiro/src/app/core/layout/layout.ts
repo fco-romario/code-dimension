@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Header } from './components/header/header';
 import { RouterOutlet } from "@angular/router";
 import { sidenavComponent } from './components/sidenav/sidenav.component';
@@ -9,5 +9,6 @@ import { sidenavComponent } from './components/sidenav/sidenav.component';
   imports: [Header, sidenavComponent, RouterOutlet],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Layout {}
